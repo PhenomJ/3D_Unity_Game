@@ -6,59 +6,98 @@ public class Character : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _destination = this.transform.position;
-	}
+        InitState();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		if (InputManager.Instance.IsMouseDown())
-        {
-            Vector3 mousePosition = InputManager.Instance.GetCursorPosition();
-
-            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100.0f, 1 << LayerMask.NameToLayer("Ground")))
-            {
-                MoveStart(hit.point);
-            }
-        }
-
-        UpdateMove();
-	}
-
-    // Character Move
-    Vector3 _destination;
-
-    void MoveStart(Vector3 destination)
-    {
-        //목적지 셋팅
-        _destination = destination;
+        UpdateCharacter();
     }
 
-    Vector3 _velocity = Vector3.zero;
-
-    void UpdateMove()
+    virtual public void UpdateCharacter()
     {
-        Vector3 snapGround = Vector3.zero;
-        Vector3 direction = (_destination - transform.position).normalized;
+        UpdateChangeState();
+        _stateList[_stateType].Update();
+    }
 
-        _velocity = direction *  18.0f;
+    //State
+    public enum eState
+    {
+        NONE,
+        IDLE,
+        MOVE,
+    }
 
-        if (gameObject.GetComponent<CharacterController>().isGrounded)
-            snapGround = Vector3.down;
+    protected eState _stateType = eState.IDLE;
+    eState _nextStateType = eState.IDLE;
+    protected Dictionary<eState, State> _stateList = new Dictionary<eState, State>();
 
-        //목적지가 현재 위치가 일정 거리 이상이면 -> 이동
-        float distance = Vector3.Distance(_destination, transform.position);
-        
-        if (distance > 0.5f)
+    void UpdateChangeState()
+    {
+        if (_nextStateType != _stateType)
         {
-            gameObject.GetComponent<CharacterController>().Move(_velocity * Time.deltaTime + snapGround);
+            _stateType = _nextStateType;
+            _stateList[_stateType].Start();
         }
-        //목적기 까지의 거리와 방향을 구한다.
+    }
 
-        //현재 속도를 보관
+    public void ChangeState(eState state)
+    {
+        _nextStateType = state;
+    }
 
-        //목적지에 가까이 왔으면 도착
+    void InitState()
+    {
+        State idleState = new IdleState();
+        State moveState = new MoveState();
+
+        idleState.Init(this);
+        moveState.Init(this);
+
+        _stateList.Add(eState.IDLE, idleState);
+        _stateList.Add(eState.MOVE, moveState);
+    }
+
+    //Move
+    protected Vector3 _targetPosition = Vector3.zero;
+
+    public Vector3 GetTargetPosition()
+    {
+        return _targetPosition;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public bool isGround()
+    {
+        return gameObject.GetComponent<CharacterController>().isGrounded;
+    }
+
+    public void Move(Vector3 velocity)
+    {
+        gameObject.GetComponent<CharacterController>().Move(velocity);
+    }
+
+    public void Rotate(Vector3 direction)
+    {
+        Quaternion characterTargetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, characterTargetRotation, 300.0f * Time.deltaTime);
+    }
+
+    // Animation
+
+    public GameObject characterVisual;
+
+    public void SetAnimationTrigger(string triggerName)
+    {
+        characterVisual.GetComponent<Animator>().SetTrigger(triggerName);
+    }
+
+    public Quaternion GetRotation()
+    {
+        return transform.rotation;
     }
 }

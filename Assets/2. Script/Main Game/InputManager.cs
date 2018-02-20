@@ -27,12 +27,22 @@ public class InputManager {
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-            MouseDown();
+            if (buttonState == eButtonState.UP)
+                MouseDown();
+
+            else if (buttonState == eButtonState.DOWN)
+                MouseHold();
         }
 
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonDown(1))
+        {
+            MouseDown();
+            buttonState = eButtonState.LEFT;
+        }
+
+        if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
         {
             MouseUp();
         }
@@ -40,21 +50,43 @@ public class InputManager {
 
     //Mouse Input
 
-    bool _isMouseDown = false;
+    public enum eButtonState
+    {
+        DOWN,
+        HOLD,
+        UP,
+        LEFT,
+    }
+    eButtonState buttonState = eButtonState.UP;
 
     void MouseDown()
     {
-        _isMouseDown = true;
+        buttonState = eButtonState.DOWN;
+    }
+
+    void MouseHold()
+    {
+        buttonState = eButtonState.HOLD;
     }
 
     void MouseUp()
     {
-        _isMouseDown = false;
+        buttonState = eButtonState.UP;
     }
 
     public bool IsMouseDown()
     {
-        return _isMouseDown;
+        return (buttonState == eButtonState.DOWN || buttonState == eButtonState.LEFT);
+    }
+
+    public bool IsMouseHold()
+    {
+        return (buttonState == eButtonState.HOLD);
+    }
+
+    public eButtonState GetClickedMouse()
+    {
+        return buttonState;
     }
 
     public Vector3 GetCursorPosition()

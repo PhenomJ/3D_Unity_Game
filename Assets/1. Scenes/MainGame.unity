@@ -109,6 +109,23 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14442003 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100052, guid: 0d1af23e338abcf48b0e47bd308ff42b, type: 3}
+  m_PrefabInternal: {fileID: 434460170}
+--- !u!136 &14442004
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 14442003}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 1
+  m_Direction: 2
+  m_Center: {x: 0.67, y: 0.1, z: -0.5}
 --- !u!1001 &46059179
 Prefab:
   m_ObjectHideFlags: 0
@@ -521,6 +538,17 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100044, guid: 0d1af23e338abcf48b0e47bd308ff42b, type: 3}
   m_PrefabInternal: {fileID: 434460170}
+--- !u!114 &1794354023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1794354022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab36889bcc4e441438ca0ddfb54cbe4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1914525304 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100034, guid: bc7dc77bb600edf4889b88fa3715495f, type: 3}
@@ -532,7 +560,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1914525304}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.3
@@ -629,7 +657,7 @@ CapsuleCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2071539400}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.7
   m_Height: 0.5

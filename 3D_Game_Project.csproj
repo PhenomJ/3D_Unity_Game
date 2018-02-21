@@ -78,12 +78,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2. Script\AnimationPlayer.cs" />
+    <Compile Include="Assets\2. Script\AttackArea.cs" />
     <Compile Include="Assets\2. Script\GameCamera.cs" />
     <Compile Include="Assets\2. Script\Main Game\Character.cs" />
     <Compile Include="Assets\2. Script\Main Game\GameManager.cs" />
     <Compile Include="Assets\2. Script\Main Game\InputManager.cs" />
     <Compile Include="Assets\2. Script\Main Game\Monster.cs" />
     <Compile Include="Assets\2. Script\Main Game\Player.cs" />
+    <Compile Include="Assets\2. Script\State\AttackState.cs" />
     <Compile Include="Assets\2. Script\State\IdleState.cs" />
     <Compile Include="Assets\2. Script\State\MoveState.cs" />
     <Compile Include="Assets\2. Script\State\State.cs" />

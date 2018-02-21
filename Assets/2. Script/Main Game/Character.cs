@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class Character : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         InitState();
+        InitAttackInfo();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         UpdateCharacter();
     }
 
@@ -26,6 +30,7 @@ public class Character : MonoBehaviour {
         NONE,
         IDLE,
         MOVE,
+        ATTACK,
     }
 
     protected eState _stateType = eState.IDLE;
@@ -50,12 +55,15 @@ public class Character : MonoBehaviour {
     {
         State idleState = new IdleState();
         State moveState = new MoveState();
+        State attackState = new AttackState();
 
         idleState.Init(this);
         moveState.Init(this);
+        attackState.Init(this);
 
         _stateList.Add(eState.IDLE, idleState);
         _stateList.Add(eState.MOVE, moveState);
+        _stateList.Add(eState.ATTACK, attackState);
     }
 
     //Move
@@ -99,5 +107,29 @@ public class Character : MonoBehaviour {
     public Quaternion GetRotation()
     {
         return transform.rotation;
+    }
+
+    public AnimationPlayer GetAnimationPlayer()
+    {
+        return characterVisual.GetComponent<AnimationPlayer>();
+    }
+
+    //Attack
+    AttackArea[] _attackAreas;
+
+    void InitAttackInfo()
+    {
+        _attackAreas = GetComponentsInChildren<AttackArea>();
+    }
+    public void AttackStart()
+    {
+        for (int i = 0; i < _attackAreas.Length; i++)
+            _attackAreas[i].Enable();
+    }
+
+    public void AttackEnd()
+    {
+        for (int i = 0; i < _attackAreas.Length; i++)
+            _attackAreas[i].Disable();
     }
 }

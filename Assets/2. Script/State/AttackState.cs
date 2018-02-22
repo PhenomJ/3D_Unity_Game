@@ -10,12 +10,10 @@ public class AttackState : State
         _character.GetAnimationPlayer().Play("Attack", ()=> { Debug.Log("Start Anim"); },
         () =>
         {
-            Debug.Log("Mid1 Anim");
             _character.AttackStart();
         },
         () =>
         {
-            Debug.Log("Mid2 Anim");
             _character.AttackEnd();
         },
         () =>

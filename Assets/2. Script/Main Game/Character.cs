@@ -8,8 +8,7 @@ public class Character : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        InitState();
-        InitAttackInfo();
+        Init();
     }
 
     // Update is called once per frame
@@ -31,6 +30,7 @@ public class Character : MonoBehaviour
         IDLE,
         MOVE,
         ATTACK,
+        CHASE,
     }
 
     protected eState _stateType = eState.IDLE;
@@ -56,14 +56,17 @@ public class Character : MonoBehaviour
         State idleState = new IdleState();
         State moveState = new MoveState();
         State attackState = new AttackState();
+        State chaseState = new ChaseState();
 
         idleState.Init(this);
         moveState.Init(this);
         attackState.Init(this);
+        chaseState.Init(this);
 
         _stateList.Add(eState.IDLE, idleState);
         _stateList.Add(eState.MOVE, moveState);
         _stateList.Add(eState.ATTACK, attackState);
+        _stateList.Add(eState.CHASE, chaseState);
     }
 
     //Move
@@ -131,5 +134,36 @@ public class Character : MonoBehaviour
     {
         for (int i = 0; i < _attackAreas.Length; i++)
             _attackAreas[i].Disable();
+    }
+
+    public enum eCharacterType
+    {
+        MONSTER,
+        PLAYER,
+        NONE,
+    }
+
+    protected eCharacterType _type = eCharacterType.NONE;
+
+    public eCharacterType GetCharacterType()
+    {
+        return _type;
+    }
+
+    virtual public void Init()
+    {
+        InitState();
+        InitAttackInfo();
+        InitDamageInfo();
+    }
+
+    void InitDamageInfo()
+    {
+        HitArea[] hitArea = GetComponentsInChildren<HitArea>();
+
+        for (int i = 0; i < hitArea.Length; i++)
+        {
+            hitArea[i].Init(this);
+        }
     }
 }

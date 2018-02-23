@@ -31,6 +31,7 @@ public class Character : MonoBehaviour
         MOVE,
         ATTACK,
         CHASE,
+        PATROL,
     }
 
     protected eState _stateType = eState.IDLE;
@@ -51,7 +52,7 @@ public class Character : MonoBehaviour
         _nextStateType = state;
     }
 
-    void InitState()
+    virtual protected void InitState()
     {
         State idleState = new IdleState();
         State moveState = new MoveState();
@@ -165,5 +166,16 @@ public class Character : MonoBehaviour
         {
             hitArea[i].Init(this);
         }
+    }
+
+
+    public float GetRefreshTime()
+    {
+        return 2.0f;
+    }
+
+    public void Patrol()
+    {
+        ChangeState(eState.PATROL);
     }
 }

@@ -16,7 +16,7 @@ public class IdleState : State
 
     public override void Update()
     {
-        base.Update();
+
     }
 
     public override void UpdateInput()

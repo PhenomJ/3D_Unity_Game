@@ -6,6 +6,10 @@ public class WargIdleState : IdleState {
     
     float deltaIdleTime = 0.0f;
 
+    public override void Start()
+    {
+    }
+
     public override void Update()
     {
         deltaIdleTime += Time.deltaTime;

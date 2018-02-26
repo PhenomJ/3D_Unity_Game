@@ -39,7 +39,7 @@ public class MoveState : State
 
         else
         {
-            _character.ChangeState(Player.eState.IDLE);
+            _character.ArriveDestination();
         }
     }
 

@@ -20,7 +20,11 @@ public class Character : MonoBehaviour
     virtual public void UpdateCharacter()
     {
         UpdateChangeState();
-        _stateList[_stateType].Update();
+        if (_stateList.ContainsKey(_stateType))
+            _stateList[_stateType].Update();
+
+        else
+            Debug.LogWarning(_stateType);
     }
 
     //State
@@ -31,6 +35,7 @@ public class Character : MonoBehaviour
         MOVE,
         ATTACK,
         CHASE,
+        MONSTERIDLE,
         PATROL,
     }
 
@@ -58,6 +63,7 @@ public class Character : MonoBehaviour
         State moveState = new MoveState();
         State attackState = new AttackState();
         State chaseState = new ChaseState();
+        
 
         idleState.Init(this);
         moveState.Init(this);
@@ -76,6 +82,11 @@ public class Character : MonoBehaviour
     public Vector3 GetTargetPosition()
     {
         return _targetPosition;
+    }
+
+    virtual public void ArriveDestination()
+    {
+        ChangeState(eState.IDLE);
     }
 
     public Vector3 GetPosition()
@@ -167,7 +178,6 @@ public class Character : MonoBehaviour
             hitArea[i].Init(this);
         }
     }
-
 
     public float GetRefreshTime()
     {

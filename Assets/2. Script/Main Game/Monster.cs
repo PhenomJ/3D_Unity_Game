@@ -21,6 +21,14 @@ public class Monster : Character
         State patrolState = new PatrolState();
         patrolState.Init(this);
         _stateList.Add(eState.PATROL, patrolState);
+
+        State chaseState = new ChaseState();
+        chaseState.Init(this);
+        _stateList.Add(eState.CHASE, chaseState);
+
+        State attackState = new AttackState();
+        attackState.Init(this);
+        _stateList.Add(eState.ATTACK, attackState);
     }
 
     public List<WayPoint> _wayPoints;
@@ -31,5 +39,19 @@ public class Monster : Character
         WayPoint wayPoint = _wayPoints[index];
         index = (index + 1) % _wayPoints.Count;
         _targetPosition = wayPoint.GetPosition();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("CharacterCtrl"))
+        {
+            Character character = other.gameObject.GetComponent<Character>();
+            if (character.GetCharacterType() == eCharacterType.PLAYER)
+            {
+                Debug.Log("set");
+                _targetObj = other.gameObject;
+                ChangeState(eState.CHASE);
+            }
+        }
     }
 }

@@ -46,7 +46,8 @@ public class Player : Character {
                         case eCharacterType.MONSTER:
                             //적
                             Debug.Log("MONSTER");
-                            _targetPosition = hit.collider.gameObject.transform.position;
+                            //_targetPosition = hit.collider.gameObject.transform.position;
+                            _targetObj = hit.collider.gameObject;
                             ChangeState(eState.CHASE);
                             break;
                     }

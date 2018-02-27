@@ -94,6 +94,7 @@
     <Compile Include="Assets\2. Script\State\PatrolState.cs" />
     <Compile Include="Assets\2. Script\State\State.cs" />
     <Compile Include="Assets\2. Script\State\WargIdleState.cs" />
+    <Compile Include="Assets\2. Script\WayPoint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

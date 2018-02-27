@@ -78,10 +78,16 @@ public class Character : MonoBehaviour
 
     //Move
     protected Vector3 _targetPosition = Vector3.zero;
+    protected GameObject _targetObj;
 
     public Vector3 GetTargetPosition()
     {
         return _targetPosition;
+    }
+
+    public GameObject GetTargetObj()
+    {
+        return _targetObj;
     }
 
     virtual public void ArriveDestination()
@@ -146,6 +152,11 @@ public class Character : MonoBehaviour
     {
         for (int i = 0; i < _attackAreas.Length; i++)
             _attackAreas[i].Disable();
+    }
+
+    public float GetAttackRange()
+    {
+        return 1.5f;
     }
 
     public enum eCharacterType

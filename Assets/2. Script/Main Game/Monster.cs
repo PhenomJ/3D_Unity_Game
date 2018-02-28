@@ -48,10 +48,24 @@ public class Monster : Character
             Character character = other.gameObject.GetComponent<Character>();
             if (character.GetCharacterType() == eCharacterType.PLAYER)
             {
-                Debug.Log("set");
                 _targetObj = other.gameObject;
                 ChangeState(eState.CHASE);
             }
         }
+    }
+
+    public override void StopChase()
+    {
+        ChangeState(eState.PATROL);
+    }
+
+    public override bool IsSearchRange(float distance)
+    {
+        if (distance > GetMaxSearchRange())
+        {
+            return false;
+        }
+
+        return true;
     }
 }

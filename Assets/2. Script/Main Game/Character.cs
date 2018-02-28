@@ -47,6 +47,7 @@ public class Character : MonoBehaviour
     {
         if (_nextStateType != _stateType)
         {
+            _stateList[_stateType].Stop();
             _stateType = _nextStateType;
             _stateList[_stateType].Start();
         }
@@ -195,8 +196,40 @@ public class Character : MonoBehaviour
         return 2.0f;
     }
 
+    public float GetMaxSearchRange()
+    {
+        return 5.0f;
+    }
+
     public void Patrol()
     {
         ChangeState(eState.PATROL);
+    }
+
+    protected bool _isSetPosition = false;
+
+    public bool IsSetPosition()
+    {
+        return _isSetPosition;
+    }
+
+    public void SetMovePosition(bool isSetPosition)
+    {
+        _isSetPosition = isSetPosition;
+    }
+
+    public void SetTargetObj (GameObject targetObj)
+    {
+        _targetObj = targetObj;
+    }
+
+    virtual public void StopChase()
+    {
+
+    }
+
+    virtual public bool IsSearchRange(float distance)
+    {
+        return false;
     }
 }

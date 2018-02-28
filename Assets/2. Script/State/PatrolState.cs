@@ -12,11 +12,6 @@ public class PatrolState : State {
         _destination = _character.GetTargetPosition();
     }
 
-    public override void Stop()
-    {
-
-    }
-
     public override void Update()
     {
         _destination.y = _character.GetPosition().y;

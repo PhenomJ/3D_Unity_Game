@@ -33,7 +33,9 @@ public class Player : Character {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
                 {
                     _targetPosition = hit.point;
-                    _stateList[_stateType].UpdateInput();
+                    _targetObj = null;
+                    _isSetPosition = true;
+                    //_stateList[_stateType].UpdateInput();
                 }
 
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Character"))
@@ -51,7 +53,6 @@ public class Player : Character {
                             ChangeState(eState.CHASE);
                             break;
                     }
-                        
                 }
             }
         }
@@ -60,5 +61,15 @@ public class Player : Character {
         {
             ChangeState(eState.ATTACK);
         }
+    }
+
+    public override void StopChase()
+    {
+        ChangeState(eState.IDLE);
+    }
+
+    public override bool IsSearchRange(float distance)
+    {
+        return false;
     }
 }

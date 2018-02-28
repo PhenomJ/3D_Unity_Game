@@ -9,18 +9,11 @@ public class IdleState : State
         _character.SetAnimationTrigger("Idle");
     }
 
-    public override void Stop()
-    {
-        base.Stop();
-    }
-
     public override void Update()
     {
-
-    }
-
-    public override void UpdateInput()
-    {
-        _character.ChangeState(Player.eState.MOVE);
+        if (_character.IsSetPosition())
+        {
+            _character.ChangeState(Player.eState.MOVE);
+        }
     }
 }

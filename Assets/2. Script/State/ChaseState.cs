@@ -11,6 +11,21 @@ public class ChaseState : State {
 
     public override void Update()
     {
+        if (_character.IsSetPosition())
+        {
+            _character.ChangeState(Character.eState.MOVE);
+            return;
+        }
+
+        if (_character.GetTargetObj() == null)
+        {
+            _character.StopChase();
+            return;
+        }
+
+        if (_character.GetTargetObj() == null)
+            return;
+
         //Vector3 destination = _character.GetTargetPosition();
         Vector3 destination = _character.GetTargetObj().transform.position;
         destination.y = _character.GetPosition().y;
@@ -25,10 +40,17 @@ public class ChaseState : State {
 
         float distance = Vector3.Distance(destination, _character.GetPosition());
 
+        
+
         if (distance > _character.GetAttackRange())
         {
             _character.Rotate(direction);
             _character.Move(_velocity * Time.deltaTime + snapGround);
+        }
+
+        else if (_character.IsSearchRange(distance))
+        {
+            _character.SetTargetObj(null);
         }
 
         else

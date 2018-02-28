@@ -17,15 +17,10 @@ public class State {
 
     virtual public void Stop()
     {
-
+        _character.SetMovePosition(false);
     }
 
     virtual public void Update()
-    {
-
-    }
-
-    virtual public void UpdateInput()
     {
 
     }

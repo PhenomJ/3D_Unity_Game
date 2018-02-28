@@ -13,13 +13,13 @@ public class MoveState : State
         _character.SetAnimationTrigger("Move");
     }
 
-    public override void Stop()
-    {
-        base.Stop();
-    }
-
     public override void Update()
     {
+        if (_character.IsSetPosition())
+        {
+            _destination = _character.GetTargetPosition();
+        }
+
         _destination.y = _character.GetPosition().y;
         Vector3 snapGround = Vector3.zero;
         Vector3 direction = (_destination - _character.GetPosition()).normalized;
@@ -41,10 +41,5 @@ public class MoveState : State
         {
             _character.ArriveDestination();
         }
-    }
-
-    public override void UpdateInput()
-    {
-        _destination = _character.GetTargetPosition();
     }
 }

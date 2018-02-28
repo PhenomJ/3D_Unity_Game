@@ -22,16 +22,7 @@ public class AttackState : State
         });
     }
 
-    public override void Stop()
-    {
-    }
-
     public override void Update()
     {
-    }
-
-    public override void UpdateInput()
-    {
-        // Combo Attack 처리
     }
 }
